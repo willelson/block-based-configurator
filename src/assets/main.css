@@ -5,6 +5,9 @@
   --border-radius: 8px;
   --green: #056517;
   --red: #bf1029;
+  --black: #000000;
+  --circle-size: 100px;
+  --square-size: 120px;
 }
 
 #app {
@@ -16,4 +19,28 @@
 
 .padding-m {
   padding: 16px;
+}
+
+.small-gap {
+  gap: 24px;
+}
+
+.large-gap {
+  gap: 48px;
+}
+
+.dashed-border {
+  border: 1px dashed var(--border-color);
+}
+
+.square {
+  border-radius: var(--border-radius);
+  width: var(--square-size);
+  height: var(--square-size);
+}
+
+.circle {
+  border-radius: 50%;
+  width: var(--circle-size);
+  height: var(--circle-size);
 }
