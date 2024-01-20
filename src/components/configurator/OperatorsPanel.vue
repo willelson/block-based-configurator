@@ -1,5 +1,5 @@
 <template>
-  <div class="area-container">operators panel</div>
+  <div class="operator-panel padding-m">operators panel</div>
 </template>
 
 <script>
@@ -12,4 +12,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.operator-panel {
+  flex: 1;
+  border-left: 1px solid var(--border-color);
+}
+</style>

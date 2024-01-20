@@ -1,5 +1,5 @@
 <template>
-  <div class="area-container">
+  <div class="confiurator-container">
     <ConfigArea />
     <OperatorsPanel />
   </div>
@@ -21,4 +21,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.confiurator-container {
+  display: flex;
+  height: 100%;
+}
+</style>

@@ -1,7 +1,19 @@
 @import './base.css';
 
+:root {
+  --border-color: #e5e5e5;
+  --border-radius: 8px;
+  --green: #056517;
+  --red: #bf1029;
+}
+
 #app {
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
+  height: 100vh;
+}
+
+.padding-m {
+  padding: 16px;
 }
