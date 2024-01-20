@@ -7,7 +7,12 @@
       @dragenter.prevent
       @dragover.prevent
     >
-      <ConfigBlock v-if="firstBlockOccupied" :type="config.block1.type" />
+      <ConfigBlock
+        v-if="firstBlockOccupied"
+        :type="config.block1.type"
+        :value="config.block1.value"
+        @update:value="(value) => updateValue(value, 'block2')"
+      />
     </div>
     <div
       class="circle"
@@ -25,7 +30,12 @@
       @dragenter.prevent
       @dragover.prevent
     >
-      <ConfigBlock v-if="secondBlockOccupied" :type="config.block2.type" />
+      <ConfigBlock
+        v-if="secondBlockOccupied"
+        :type="config.block2.type"
+        :value="config.block2.value"
+        @update:value="(value) => updateValue(value, 'block2')"
+      />
     </div>
   </div>
 </template>
@@ -34,6 +44,7 @@
 import ConfigBlock from '@/components/configurator/ConfigBlock.vue'
 
 export default {
+  emits: ['update:config'],
   props: {
     config: {
       type: Object,
@@ -56,7 +67,11 @@ export default {
       if (dropZone === 'operator' && operator.type !== 'operator') return
 
       const updatedRow = { ...this.config, [dropZone]: operator }
-
+      this.$emit('update:config', updatedRow)
+    },
+    updateValue(value, dropZone) {
+      const updatedDropZone = { ...this.config[dropZone], value }
+      const updatedRow = { ...this.config, [dropZone]: updatedDropZone }
       this.$emit('update:config', updatedRow)
     }
   },

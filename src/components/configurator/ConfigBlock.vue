@@ -1,7 +1,13 @@
 <template>
   <DraggableBlock @start-drag="startDrag" :type="type">
     <template #content>
-      <input :value="value" ref="blockInput" class="config-input" placeholder="Enter a value" />
+      <input
+        :value="value"
+        ref="blockInput"
+        class="config-input"
+        placeholder="Enter a value"
+        @input="userInput"
+      />
     </template>
   </DraggableBlock>
 </template>
@@ -10,16 +16,19 @@
 import DraggableBlock from '@/components/configurator/DraggableBlock.vue'
 
 export default {
+  emits: ['update:value'],
   props: {
     type: {
+      type: String,
+      required: true
+    },
+    value: {
       type: String,
       required: true
     }
   },
   data() {
-    return {
-      value: ''
-    }
+    return {}
   },
   components: {
     DraggableBlock
@@ -28,6 +37,9 @@ export default {
     startDrag(event) {
       console.log(event)
       console.log('dragging a config block....')
+    },
+    userInput(event) {
+      this.$emit('update:value', event.target.value)
     }
   },
   mounted() {
