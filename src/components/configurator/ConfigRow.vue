@@ -11,7 +11,9 @@
         v-if="firstBlockOccupied"
         :type="config.block1.type"
         :value="config.block1.value"
-        @update:value="(value) => updateValue(value, 'block2')"
+        :configIndex="config.index"
+        position="block1"
+        @update:value="(value) => updateValue(value, 'block1')"
       />
     </div>
     <div
@@ -21,7 +23,12 @@
       @dragenter.prevent
       @dragover.prevent
     >
-      <ConfigBlock v-if="operatorOccupied" :type="config.operator.type" />
+      <ConfigBlock
+        v-if="operatorOccupied"
+        :type="config.operator.type"
+        :configIndex="config.index"
+        position="operator"
+      />
     </div>
     <div
       class="square"
@@ -34,6 +41,8 @@
         v-if="secondBlockOccupied"
         :type="config.block2.type"
         :value="config.block2.value"
+        :config-index="config.index"
+        position="block2"
         @update:value="(value) => updateValue(value, 'block2')"
       />
     </div>

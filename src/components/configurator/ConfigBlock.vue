@@ -7,6 +7,7 @@
         class="config-input"
         placeholder="Enter a value"
         @input="userInput"
+        v-on:keyup.enter="blurInput"
       />
     </template>
   </DraggableBlock>
@@ -23,6 +24,13 @@ export default {
       required: true
     },
     value: {
+      type: String
+    },
+    configIndex: {
+      type: Number,
+      required: true
+    },
+    position: {
       type: String,
       required: true
     }
@@ -35,15 +43,20 @@ export default {
   },
   methods: {
     startDrag(event) {
-      console.log(event)
-      console.log('dragging a config block....')
+      const { type, value, configIndex, position } = this
+      event.dataTransfer.setData('data', JSON.stringify({ type, value, configIndex, position }))
     },
     userInput(event) {
       this.$emit('update:value', event.target.value)
+    },
+    blurInput() {
+      this.$refs.blockInput.blur()
     }
   },
   mounted() {
-    this.$refs.blockInput.focus()
+    if (!this.value) {
+      this.$refs.blockInput.focus()
+    }
   }
 }
 </script>
