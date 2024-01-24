@@ -53,7 +53,7 @@ import ConfigBlock from '@/components/configurator/ConfigBlock.vue'
 import OperatorBlock from '@/components/configurator/OperatorBlock.vue'
 
 export default {
-  emits: ['update:config'],
+  emits: ['update:config', 'block-moved'],
   props: {
     config: {
       type: Object,
@@ -74,11 +74,26 @@ export default {
       if (!data) return
 
       const block = JSON.parse(data)
-      if (dropZone === 'operator' && !block.position === 'operator') return
-      if (dropZone !== 'operator' && block.position === 'operator') return
+      if (!this.validateDrop(dropZone, block.position)) return
 
       const updatedRow = { ...this.config, [dropZone]: block }
       this.$emit('update:config', updatedRow)
+
+      const droppedBlockHadAlreadyBeenPlaced = block.hasOwnProperty('configIndex')
+      if (droppedBlockHadAlreadyBeenPlaced) {
+        console.log('emitting block-moved')
+        this.$emit('block-moved', { fromPosition: block.position, fromIndex: block.configIndex })
+      }
+    },
+    validateDrop(dropZone, blockType) {
+      let dropValidity = true
+      const operatorDroppedOutsideCircle = dropZone !== 'operator' && blockType === 'operator'
+      const nonOperatorDroppedInCircle = dropZone === 'operator' && blockType !== 'operator'
+
+      if (operatorDroppedOutsideCircle) dropValidity = false
+      if (nonOperatorDroppedInCircle) dropValidity = false
+
+      return dropValidity
     },
     updateValue(value, dropZone) {
       const updatedDropZone = { ...this.config[dropZone], value }

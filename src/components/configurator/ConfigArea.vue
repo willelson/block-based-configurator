@@ -1,17 +1,18 @@
 <template>
-  <div class="config-area padding-m">
-    config area
+  <div class="config-area padding-m large-gap">
     <ConfigRow
       v-for="row in config"
       :config="row"
       :key="row.index"
       @update:config="(updatedRow) => updateRow(updatedRow, row.index)"
+      @block-moved="deleteBlockFromPreviousPosition"
+      class="config-row"
     />
 
     <div class="delete-drop">
-      <DroppableArea @drop="deleteBlock($event)">
+      <DroppableArea @drop="handleDeleteDrop($event)">
         <template #content>
-          <div class="delete-drop-zone padding-m">delete</div>
+          <div class="delete-drop-zone padding-m">Delete</div>
         </template>
       </DroppableArea>
     </div>
@@ -31,6 +32,12 @@ export default {
           block1: {},
           operator: {},
           block2: {}
+        },
+        {
+          index: 1,
+          block1: {},
+          operator: {},
+          block2: {}
         }
       ]
     }
@@ -43,13 +50,20 @@ export default {
     updateRow(row, index) {
       this.config = [...this.config.slice(0, index), row, ...this.config.slice(index + 1)]
     },
-    deleteBlock(event) {
+    handleDeleteDrop(event) {
       const data = JSON.parse(event.dataTransfer.getData('data'))
       const index = data?.configIndex
       if (index === null || index < 0) return
 
-      const updatedRow = { ...this.config[index], [data.position]: {} }
+      this.deleteBlock(index, data.position)
+    },
+    deleteBlock(index, position) {
+      const updatedRow = { ...this.config[index], [position]: {} }
       this.config = [...this.config.slice(0, index), updatedRow, ...this.config.slice(index + 1)]
+    },
+    deleteBlockFromPreviousPosition(block) {
+      const { fromPosition, fromIndex } = block
+      this.deleteBlock(fromIndex, fromPosition)
     }
   }
 }
@@ -59,6 +73,8 @@ export default {
 .config-area {
   flex: 2;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .delete-drop {
@@ -70,7 +86,7 @@ export default {
 }
 
 .delete-drop-zone {
-  box-shadow: 0 0 12px 0px var(--red);
+  background-color: var(--light-grey);
   border-radius: var(--border-radius);
 }
 </style>

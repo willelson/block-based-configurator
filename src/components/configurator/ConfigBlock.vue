@@ -3,10 +3,12 @@
     <template #content>
       <input
         :value="value"
+        :type="inputType"
         ref="blockInput"
         class="config-input"
         placeholder="Enter a value"
         @input="userInput"
+        @keyDown="checkInput"
         v-on:keyup.enter="blurInput"
       />
     </template>
@@ -51,6 +53,20 @@ export default {
     },
     blurInput() {
       this.$refs.blockInput.blur()
+    },
+    checkInput(e) {
+      if (this.inputType === 'number' && ['e', 'E', '+'].includes(e.key)) {
+        e.preventDefault()
+      }
+    }
+  },
+  computed: {
+    inputType() {
+      if (this.type === 'number') {
+        return 'number'
+      } else {
+        return 'text'
+      }
     }
   },
   mounted() {
@@ -69,6 +85,7 @@ export default {
   outline: none;
   border: none;
   background-color: transparent;
+  font-weight: 500;
 }
 
 .config-input:focus::placeholder {

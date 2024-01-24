@@ -1,18 +1,23 @@
-.string {
-  border: 2px solid var(--green);
-  color: var(--green);
-}
-
-.integer {
-  border: 2px solid var(--red);
-  color: var(--red);
-}
-
-.field {
+.text,
+.number,
+.field,
+.operator {
   border: 2px solid var(--black);
   color: var(--black);
 }
 
+.text {
+  background-color: var(--text-block-green);
+}
+
+.number {
+  background-color: var(--number-block-red);
+}
+
+.field {
+  background-color: var(--field-grey);
+}
+
 .operator {
-  border: 2px solid var(--black);
+  background-color: #fef8dd;
 }

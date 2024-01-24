@@ -1,12 +1,11 @@
 <template>
   <div class="operator-panel padding-m">
-    operator panel
     <div class="operator-section">
       <div class="section-title">Operators</div>
       <div class="block-container small-gap">
-        <OperatorBlock type="less_than" />
-        <OperatorBlock type="equal_to" />
-        <OperatorBlock type="greater_than" />
+        <OperatorBlock type="less than" />
+        <OperatorBlock type="equal to" />
+        <OperatorBlock type="greater than" />
       </div>
     </div>
     <div class="operator-section">
@@ -18,8 +17,8 @@
     <div class="operator-section">
       <div class="section-title">Value types</div>
       <div class="block-container small-gap">
-        <VariableBlock type="string" />
-        <VariableBlock type="integer" />
+        <VariableBlock type="text" />
+        <VariableBlock type="number" />
       </div>
     </div>
   </div>
@@ -56,14 +55,25 @@ export default {
 }
 
 .operator-section {
-  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 33%;
+  padding: 24px;
+}
+
+.operator-section .block-container {
+  overflow-y: auto;
 }
 
 .operator-panel > .operator-section:not(:last-child) {
   border-bottom: 1px solid var(--border-color);
 }
 
+.operator-panel > .operator-section:first-of-type {
+  padding-top: 0px;
+}
+
 .section-title {
-  padding: 8px 0;
+  padding-bottom: 8px;
 }
 </style>

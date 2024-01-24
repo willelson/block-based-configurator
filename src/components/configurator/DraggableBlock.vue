@@ -7,12 +7,6 @@
 <script>
 export default {
   emits: ['start-drag'],
-  props: {
-    type: {
-      type: String,
-      required: true
-    }
-  },
   methods: {
     startDrag(event) {
       event.dataTransfer.dropEffect = 'move'
@@ -29,6 +23,7 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: grab;
+  font-weight: 500;
 }
 
 .draggable-block:active {
