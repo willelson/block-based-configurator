@@ -23,11 +23,10 @@
       @dragenter.prevent
       @dragover.prevent
     >
-      <ConfigBlock
+      <OperatorBlock
         v-if="operatorOccupied"
         :type="config.operator.type"
         :configIndex="config.index"
-        position="operator"
       />
     </div>
     <div
@@ -51,6 +50,7 @@
 
 <script>
 import ConfigBlock from '@/components/configurator/ConfigBlock.vue'
+import OperatorBlock from '@/components/configurator/OperatorBlock.vue'
 
 export default {
   emits: ['update:config'],
@@ -65,17 +65,19 @@ export default {
     return {}
   },
   components: {
-    ConfigBlock
+    ConfigBlock,
+    OperatorBlock
   },
   methods: {
     onDrop(event, dropZone) {
       const data = event.dataTransfer.getData('data')
       if (!data) return
 
-      const operator = JSON.parse(data)
-      if (dropZone === 'operator' && operator.type !== 'operator') return
+      const block = JSON.parse(data)
+      if (dropZone === 'operator' && !block.position === 'operator') return
+      if (dropZone !== 'operator' && block.position === 'operator') return
 
-      const updatedRow = { ...this.config, [dropZone]: operator }
+      const updatedRow = { ...this.config, [dropZone]: block }
       this.$emit('update:config', updatedRow)
     },
     updateValue(value, dropZone) {

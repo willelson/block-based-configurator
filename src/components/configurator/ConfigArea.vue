@@ -45,7 +45,9 @@ export default {
     },
     deleteBlock(event) {
       const data = JSON.parse(event.dataTransfer.getData('data'))
-      const index = data.configIndex
+      const index = data?.configIndex
+      if (index === null || index < 0) return
+
       const updatedRow = { ...this.config[index], [data.position]: {} }
       this.config = [...this.config.slice(0, index), updatedRow, ...this.config.slice(index + 1)]
     }

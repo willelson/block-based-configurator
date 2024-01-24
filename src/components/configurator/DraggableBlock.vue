@@ -1,5 +1,5 @@
 <template>
-  <div class="draggable-block square" draggable="true" @dragstart="startDrag($event)" :class="type">
+  <div class="draggable-block" draggable="true" @dragstart="startDrag($event)">
     <slot name="content"></slot>
   </div>
 </template>
@@ -28,20 +28,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: grab;
 }
 
-.string {
-  border: 2px solid var(--green);
-  color: var(--green);
-}
-
-.integer {
-  border: 2px solid var(--red);
-  color: var(--red);
-}
-
-.field {
-  border: 2px solid var(--black);
-  color: var(--black);
+.draggable-block:active {
+  cursor: grabbing;
 }
 </style>

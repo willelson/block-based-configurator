@@ -1,5 +1,5 @@
 <template>
-  <DraggableBlock @start-drag="startDrag" :type="type">
+  <DraggableBlock @start-drag="startDrag" :class="type" class="square">
     <template #content>
       <input
         :value="value"
@@ -61,6 +61,7 @@ export default {
 }
 </script>
 
+<style src="@/assets/blockStyles.css" scoped></style>
 <style scoped>
 .config-input {
   text-align: center;

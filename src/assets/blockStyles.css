@@ -1,0 +1,18 @@
+.string {
+  border: 2px solid var(--green);
+  color: var(--green);
+}
+
+.integer {
+  border: 2px solid var(--red);
+  color: var(--red);
+}
+
+.field {
+  border: 2px solid var(--black);
+  color: var(--black);
+}
+
+.operator {
+  border: 2px solid var(--black);
+}

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <DraggableBlock @start-drag="startDrag" class="operator circle">
+    <DraggableBlock @start-drag="startDrag" :class="type" class="square">
       <template #content>
         {{ type }}
       </template>
@@ -16,10 +16,6 @@ export default {
     type: {
       type: String,
       required: true
-    },
-    configIndex: {
-      type: Number,
-      required: false
     }
   },
   data() {
@@ -30,11 +26,8 @@ export default {
   },
   methods: {
     startDrag(event) {
-      const { type, configIndex } = this
-      event.dataTransfer.setData(
-        'data',
-        JSON.stringify({ type, configIndex, position: 'operator' })
-      )
+      const { type } = this
+      event.dataTransfer.setData('data', JSON.stringify({ type }))
     }
   }
 }
