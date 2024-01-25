@@ -20,4 +20,7 @@
 
 .operator {
   background-color: #fef8dd;
+  text-align: center;
+  padding: 8px;
+  line-height: normal;
 }

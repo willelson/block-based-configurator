@@ -46,6 +46,7 @@ export default {
   border-left: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
+  margin-top: 43px;
 }
 
 .block-container {
