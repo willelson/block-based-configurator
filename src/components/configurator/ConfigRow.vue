@@ -79,9 +79,11 @@ export default {
       const updatedRow = { ...this.config, [dropZone]: block }
       this.$emit('update:config', updatedRow)
 
-      const droppedBlockHadAlreadyBeenPlaced = block.hasOwnProperty('configIndex')
-      if (droppedBlockHadAlreadyBeenPlaced) {
-        console.log('emitting block-moved')
+      const blockHadAlreadyBeenPlaced = block.hasOwnProperty('configIndex')
+      const droppedOnStartingPosition =
+        block.position === dropZone && block.configIndex === this.config.index
+
+      if (blockHadAlreadyBeenPlaced && !droppedOnStartingPosition) {
         this.$emit('block-moved', { fromPosition: block.position, fromIndex: block.configIndex })
       }
     },
