@@ -43,10 +43,8 @@ export default {
 <style scoped>
 .operator-panel {
   flex: 1;
-  border-left: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  margin-top: 43px;
 }
 
 .block-container {

@@ -1,6 +1,6 @@
 <template>
   <div class="config-area">
-    <ConfigHeader @clear="clearConfig" @save="saveToFile" />
+    <ConfigHeader @clear="clearConfig" @save="saveToFile" @configUploaded="loadConfig" />
     <div class="drag-drop-area padding-m large-gap">
       <ConfigRow
         v-for="row in config"
@@ -95,6 +95,9 @@ export default {
       link.download = name + '.json'
       link.click()
       URL.revokeObjectURL(link.href)
+    },
+    loadConfig(config) {
+      this.config = config
     }
   }
 }

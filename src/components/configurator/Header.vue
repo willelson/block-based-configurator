@@ -4,6 +4,7 @@
       <input class="header-input" type="text" v-model="configName" />
     </div>
     <div class="controls">
+      <UploadButton @upload="handleUpload" />
       <button class="btn" @click="$emit('clear')">Clear</button>
       <button class="btn" @click="$emit('save', configName)">Save</button>
     </div>
@@ -11,14 +12,26 @@
 </template>
 
 <script>
+import UploadButton from '@/components/configurator/UploadButton.vue'
+
 export default {
-  emits: ['clear', 'save'],
+  emits: ['clear', 'save', 'config-uploaded'],
   data() {
     return {
       configName: 'Untitled config'
     }
   },
+  components: {
+    UploadButton
+  },
+  methods: {
+    handleUpload(file) {
   methods: {}
+      const { config, filename } = file
+      this.configName = filename
+      this.$emit('config-uploaded', config)
+    }
+  }
 }
 </script>
 
@@ -43,14 +56,5 @@ export default {
 
 .header-input:focus {
   outline: 2px solid var(--black);
-}
-
-.btn {
-  padding: 8px 16px;
-  border-radius: var(--border-radius);
-  border: 2px solid var(--light-grey);
-  background-color: var(--light-grey);
-  color: var(--black);
-  cursor: pointer;
 }
 </style>

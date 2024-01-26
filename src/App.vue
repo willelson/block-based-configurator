@@ -1,21 +1,19 @@
 <template>
   <div class="confiurator-container">
     <ConfigArea />
-    <OperatorsPanel />
+    <SidePanel />
   </div>
 </template>
 
 <script>
 import ConfigArea from '@/components/configurator/ConfigArea.vue'
-import OperatorsPanel from '@/components/configurator/OperatorsPanel.vue'
+import SidePanel from '@/components/SidePanel.vue'
 
 export default {
-  data() {
-    return {}
-  },
   components: {
     ConfigArea,
-    OperatorsPanel
+    // OperatorsPanel,
+    SidePanel
   },
   methods: {}
 }
