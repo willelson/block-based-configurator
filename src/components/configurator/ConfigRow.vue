@@ -26,6 +26,7 @@
       <OperatorBlock
         v-if="operatorOccupied"
         :type="config.operator.type"
+        :label="config.operator.label"
         :configIndex="config.index"
       />
     </div>

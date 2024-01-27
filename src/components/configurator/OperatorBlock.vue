@@ -2,7 +2,7 @@
   <div>
     <DraggableBlock @start-drag="startDrag" class="operator circle">
       <template #content>
-        {{ type }}
+        {{ label }}
       </template>
     </DraggableBlock>
   </div>
@@ -14,6 +14,10 @@ import DraggableBlock from '@/components/configurator/DraggableBlock.vue'
 export default {
   props: {
     type: {
+      type: String,
+      required: true
+    },
+    label: {
       type: String,
       required: true
     },
@@ -30,10 +34,10 @@ export default {
   },
   methods: {
     startDrag(event) {
-      const { type, configIndex } = this
+      const { type, label, configIndex } = this
       event.dataTransfer.setData(
         'data',
-        JSON.stringify({ type, configIndex, position: 'operator' })
+        JSON.stringify({ type, label, configIndex, position: 'operator' })
       )
     }
   }

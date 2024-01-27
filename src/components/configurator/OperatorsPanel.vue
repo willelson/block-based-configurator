@@ -3,9 +3,12 @@
     <div class="operator-section">
       <div class="section-title">Operators</div>
       <div class="block-container small-gap">
-        <OperatorBlock type="less than" />
-        <OperatorBlock type="equal to" />
-        <OperatorBlock type="greater than" />
+        <OperatorBlock :type="LESS_THAN" label="less than" />
+        <OperatorBlock :type="EQUAL_TO" label="equal to" />
+        <OperatorBlock :type="GREATER_THAN" label="greater than" />
+        <OperatorBlock :type="GREATER_THAN_OR_EQUAL_TO" label="greater than or equal to" />
+        <OperatorBlock :type="LESS_THAN_OR_EQUAL_TO" label="less than or equal to" />
+        <OperatorBlock :type="NOT_EQUAL_TO" label="not equal to" />
       </div>
     </div>
     <div class="operator-section">
@@ -28,9 +31,25 @@
 import OperatorBlock from '@/components/configurator/OperatorBlock.vue'
 import VariableBlock from '@/components/configurator/VariableBlock.vue'
 
+import {
+  GREATER_THAN,
+  LESS_THAN,
+  GREATER_THAN_OR_EQUAL_TO,
+  LESS_THAN_OR_EQUAL_TO,
+  EQUAL_TO,
+  NOT_EQUAL_TO
+} from '@/scripts/constants.js'
+
 export default {
   data() {
-    return {}
+    return {
+      GREATER_THAN,
+      LESS_THAN,
+      GREATER_THAN_OR_EQUAL_TO,
+      LESS_THAN_OR_EQUAL_TO,
+      EQUAL_TO,
+      NOT_EQUAL_TO
+    }
   },
   components: {
     OperatorBlock,
