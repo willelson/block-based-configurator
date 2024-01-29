@@ -8,6 +8,7 @@
       :navigationBar="false"
       :statusBar="false"
       style="flex: 1"
+      @change="resetValidationState"
     />
     <ValidationMessage style="flex: 1" :state="state" @validate="validateTestObject" />
   </div>
@@ -38,6 +39,9 @@ export default {
       const validationResult = validateConfig(this.config, value)
       if (validationResult) this.state = PASSED
       else this.state = FAILED
+    },
+    resetValidationState() {
+      this.state = PENDING
     }
   },
   components: {
@@ -46,6 +50,11 @@ export default {
   },
   computed: {
     ...mapState(useStore, ['config'])
+  },
+  watch: {
+    config() {
+      this.resetValidationState()
+    }
   }
 }
 </script>
