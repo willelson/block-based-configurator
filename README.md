@@ -36,6 +36,8 @@ An expression should be built using a block of each type, for example: `Field - 
 
 ## Project Setup
 
+Clone the repository and install the dependencies
+
 ```sh
 npm install
 ```
