@@ -47,7 +47,8 @@ export const validateConfig = (config, testOject) => {
   // Validate entire config against a test object
   let valid = true
 
-  config.forEach((row) => {
+  const testConfig = removeEmptyRows(config)
+  testConfig.forEach((row) => {
     const block1Value = evaluateBlock(row.block1, testOject)
     const operator = evaluateBlock(row.operator, testOject)
     const block2Value = evaluateBlock(row.block2, testOject)
@@ -56,4 +57,13 @@ export const validateConfig = (config, testOject) => {
   })
 
   return valid
+}
+
+const allBlocksEmpty = (row) => {
+  const keys = ['block1', 'operator', 'block2']
+  return keys.every((key) => Object.keys(row[key]).length === 0)
+}
+
+export const removeEmptyRows = (config) => {
+  return config.filter((row) => !allBlocksEmpty(row))
 }

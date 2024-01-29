@@ -26,7 +26,6 @@ export default {
   },
   methods: {
     handleUpload(file) {
-  methods: {}
       const { config, filename } = file
       this.configName = filename
       this.$emit('config-uploaded', config)

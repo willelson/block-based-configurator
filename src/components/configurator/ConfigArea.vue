@@ -27,39 +27,11 @@ import ConfigRow from '@/components/configurator/ConfigRow.vue'
 import DroppableArea from '@/components/configurator/DroppableArea.vue'
 import ConfigHeader from '@/components/configurator/Header.vue'
 
-const DEFAULT_CONFIG = [
-  {
-    index: 0,
-    block1: {},
-    operator: {},
-    block2: {}
-  },
-  {
-    index: 1,
-    block1: {},
-    operator: {},
-    block2: {}
-  },
-  {
-    index: 2,
-    block1: {},
-    operator: {},
-    block2: {}
-  },
-  {
-    index: 3,
-    block1: {},
-    operator: {},
-    block2: {}
-  }
-]
+import { mapWritableState } from 'pinia'
+import { useStore } from '@/stores/config.js'
+import { DEFAULT_CONFIG } from '@/scripts/constants.js'
 
 export default {
-  data() {
-    return {
-      config: DEFAULT_CONFIG
-    }
-  },
   components: {
     ConfigRow,
     DroppableArea,
@@ -88,7 +60,6 @@ export default {
       this.config = DEFAULT_CONFIG
     },
     saveToFile(name) {
-      console.log(`saving "${name}"`)
       const link = document.createElement('a')
       const file = new Blob([JSON.stringify(this.config)], { type: 'text/json' })
       link.href = URL.createObjectURL(file)
@@ -99,6 +70,9 @@ export default {
     loadConfig(config) {
       this.config = config
     }
+  },
+  computed: {
+    ...mapWritableState(useStore, ['config'])
   }
 }
 </script>

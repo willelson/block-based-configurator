@@ -2,20 +2,17 @@
   <div class="validation-message">
     <div class="message-container">
       <div class="message">{{ state }}</div>
-      <button class="btn">validate</button>
+      <button class="btn" @click="$emit('validate')">validate</button>
     </div>
   </div>
 </template>
 
 <script>
-const PENDING = 'pending'
-const PASSED = 'passed'
-const FAILED = 'failed'
-
 export default {
-  data() {
-    return {
-      state: PENDING,
+  emits: ['validate'],
+  props: {
+    state: {
+      type: String
     }
   },
   methods: {}

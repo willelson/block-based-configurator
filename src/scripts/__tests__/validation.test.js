@@ -7,7 +7,12 @@ import {
   NOT_EQUAL_TO
 } from '@/scripts/constants.js'
 
-import { validateRow, evaluateBlock, validateConfig } from '@/scripts/validation.js'
+import {
+  validateRow,
+  evaluateBlock,
+  validateConfig,
+  removeEmptyRows
+} from '@/scripts/validation.js'
 import { describe, test, expect } from 'vitest'
 
 describe('validateRow', () => {
@@ -94,5 +99,41 @@ describe('validateConfig', () => {
     }
 
     expect(validateConfig(config, testObject)).toBe(false)
+  })
+})
+
+describe('removeEmptyRows', () => {
+  test('empty rows are removed', () => {
+    const config = [
+      {
+        index: 0,
+        block1: { type: 'field', value: 'name' },
+        operator: { type: 'equal_to', label: 'equal to', position: 'operator' },
+        block2: { type: 'text', value: 'buddha' }
+      },
+      { index: 1, block1: {}, operator: {}, block2: {} },
+      { index: 2, block1: {}, operator: {}, block2: {} },
+      { index: 3, block1: {}, operator: {}, block2: {} }
+    ]
+
+    const result = removeEmptyRows(config)
+    expect(result.length).toBe(1)
+  })
+  test('partially empty rows are removed', () => {
+    const config = [
+      {
+        index: 0,
+        block1: { type: 'field', value: 'name' },
+        operator: { type: 'equal_to', label: 'equal to', position: 'operator' },
+        block2: { type: 'text', value: 'buddha' }
+      },
+      { index: 1, block1: {}, operator: {}, block2: {} },
+      { index: 2, block1: {}, operator: {}, block2: { type: 'text', value: 'second buddha' } },
+      { index: 3, block1: {}, operator: {}, block2: {} }
+    ]
+
+    const result = removeEmptyRows(config)
+    console.log(result)
+    expect(result.length).toBe(2)
   })
 })
