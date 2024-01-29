@@ -26,7 +26,10 @@ export default {
   },
   methods: {
     handleUpload(file) {
-      const { config, filename } = file
+      let { config, filename } = file
+      if (filename.endsWith('.json')) {
+        filename = filename.slice(0, filename.length - 5)
+      }
       this.configName = filename
       this.$emit('config-uploaded', config)
     }
