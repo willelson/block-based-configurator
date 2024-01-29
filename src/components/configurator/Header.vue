@@ -5,7 +5,7 @@
     </div>
     <div class="controls">
       <UploadButton @upload="handleUpload" />
-      <button class="btn" @click="$emit('clear')">Clear</button>
+      <button class="btn" @click="clearConfig">Clear</button>
       <button class="btn" @click="$emit('save', configName)">Save</button>
     </div>
   </div>
@@ -14,11 +14,13 @@
 <script>
 import UploadButton from '@/components/configurator/UploadButton.vue'
 
+const DEFAULT_CONFIG_NAME = 'Untitled config'
+
 export default {
   emits: ['clear', 'save', 'config-uploaded'],
   data() {
     return {
-      configName: 'Untitled config'
+      configName: DEFAULT_CONFIG_NAME
     }
   },
   components: {
@@ -32,6 +34,10 @@ export default {
       }
       this.configName = filename
       this.$emit('config-uploaded', config)
+    },
+    clearConfig() {
+      this.configName = DEFAULT_CONFIG_NAME
+      this.$emit('clear')
     }
   }
 }
