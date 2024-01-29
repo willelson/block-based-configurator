@@ -18,7 +18,7 @@ A drag and drop based application to build configuration scripts and validate th
 A set of expressions. For example, "occupation equal to student" or "age greater than 99".
 
 #### What are they validated against?
-Simply a JSON object. Give the examples above, the following JSON obect would pass.
+A JSON object. Given the examples above, the following JSON obect would pass.
 ```
 {
   "occupation": "student",
