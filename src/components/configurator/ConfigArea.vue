@@ -14,7 +14,7 @@
       <div class="delete-drop">
         <DroppableArea @drop="handleDeleteDrop($event)">
           <template #content>
-            <div class="delete-drop-zone padding-m">Delete</div>
+            <div class="delete-drop-zone padding-m dashed-border">Delete</div>
           </template>
         </DroppableArea>
       </div>
@@ -88,6 +88,7 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
+  padding-top: 32px;
 }
 
 .delete-drop {
