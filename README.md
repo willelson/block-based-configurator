@@ -26,6 +26,14 @@ Simply a JSON object. Give the examples above, the following JSON obect would pa
 }
 ```
 
+#### How is a confguration script built?
+Blocks are dragged from the right hand side panel onto the configuration area, where they can be dropped into the boxes with dashed lines to create expressions. An expression is made up of 3 types of blocks:
+1. Operators - determine how the components of the expression are evaluated - greater than, equal to etc. These can be dropped into the middle of the row
+2. Fields - these represent a key from the test input object, for example “Name” or “Age”
+3. Value types - these are used to define a value to test against, for example “Buddha” or “99”
+
+An expression should be built using a block of each type, for example: `Field - Operator - Value`, and not `Field - Operator - Field`.
+
 ## Project Setup
 
 ```sh
