@@ -70,6 +70,16 @@ export default {
     OperatorBlock
   },
   methods: {
+    /**
+     * Handles blocks dropped onto config row drop zones
+     * @param {object} event - event oject from dragged object
+     * @param {string} dropZone - row component that draged item was dropped onto - 'block1', 'operator' or 'block2'
+     * @returns {undefined}
+     *
+     * @emits 'update:config' - checks drop is valid with vaidateDrop then sends updated row config to parent confi area
+     * @emits 'block-moved' - emitted if dropped block was moved from another position in so it can be deleted from previous positionn
+     *
+     */
     onDrop(event, dropZone) {
       const data = event.dataTransfer.getData('data')
       if (!data) return
@@ -88,6 +98,19 @@ export default {
         this.$emit('block-moved', { fromPosition: block.position, fromIndex: block.configIndex })
       }
     },
+    /**
+     * Checks if dragged block is allowed to be dropped on the drop zone targeted
+     * @param {string} dropZone - row component that draged item was dropped onto - 'block1', 'operator' or 'block2'
+     * @param {string} blockType - type of the dragged lock - 'block1', 'operator' or 'block2'
+     * @returns {boolean} - whether or not this drop is allowed
+     *
+     * @example
+     * const dropZone = 'operator'
+     * const blockType = 'text'
+     *
+     * validateDrop(dropZone, blockType)
+     * >>> false
+     */
     validateDrop(dropZone, blockType) {
       let dropValidity = true
       const operatorDroppedOutsideCircle = dropZone !== 'operator' && blockType === 'operator'
