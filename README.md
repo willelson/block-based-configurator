@@ -2,7 +2,7 @@
 
 A drag and drop based application to build configuration scripts and validate them against a JSON object.
 
-![build tab](https://github.com/willelson/block-based-configurator/assets/10315667/221b9ddd-9692-4287-a36a-bd983d232c02)
+![build](https://github.com/willelson/block-based-configurator/assets/10315667/d2b44c98-d177-4c30-9678-c3ff6e2c461c)
 
 ## Features
 
@@ -11,8 +11,7 @@ A drag and drop based application to build configuration scripts and validate th
 - Customise the name of the configuration and export it to a file.
 - Upload a configuration from a file.
 
-
-![validate tab](https://github.com/willelson/block-based-configurator/assets/10315667/11de500f-2809-4a2f-9950-4794b6528cc7)
+![validate](https://github.com/willelson/block-based-configurator/assets/10315667/af055cdc-50fc-4c52-852a-299d630ba4af)
 
 #### What is a configuration script?
 A set of expressions. For example, "occupation equal to student" or "age greater than 99".
