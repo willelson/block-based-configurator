@@ -5,29 +5,33 @@ export const LESS_THAN_OR_EQUAL_TO = 'less_than_or_equal_to'
 export const EQUAL_TO = 'equal_to'
 export const NOT_EQUAL_TO = 'not_equal_to'
 
+export const LEFT_SIDE = 'block1'
+export const OPERATOR = 'operator'
+export const RIGHT_SIDE = 'block2'
+
 export const DEFAULT_CONFIG = [
   {
     index: 0,
-    block1: {},
-    operator: {},
-    block2: {}
+    [LEFT_SIDE]: {},
+    [OPERATOR]: {},
+    [RIGHT_SIDE]: {}
   },
   {
     index: 1,
-    block1: {},
-    operator: {},
-    block2: {}
+    [LEFT_SIDE]: {},
+    [OPERATOR]: {},
+    [RIGHT_SIDE]: {}
   },
   {
     index: 2,
-    block1: {},
-    operator: {},
-    block2: {}
+    [LEFT_SIDE]: {},
+    [OPERATOR]: {},
+    [RIGHT_SIDE]: {}
   },
   {
     index: 3,
-    block1: {},
-    operator: {},
-    block2: {}
+    [LEFT_SIDE]: {},
+    [OPERATOR]: {},
+    [RIGHT_SIDE]: {}
   }
 ]
