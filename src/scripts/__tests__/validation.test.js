@@ -54,6 +54,31 @@ describe('evaluateBlock', () => {
     const value = evaluateBlock(testRow[OPERATOR], testObject)
     expect(value).toEqual(EQUAL_TO)
   })
+  test('evalutes number type as number', () => {
+    const testRow = {
+      index: 0,
+      [LEFT_SIDE]: { type: FIELD_TYPE, value: 'age' },
+      [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+      [RIGHT_SIDE]: { type: NUMBER_TYPE, value: '42' }
+    }
+
+    const value = evaluateBlock(testRow[RIGHT_SIDE], testObject)
+    expect(value).toEqual(42)
+    expect(typeof value).toEqual('number')
+  })
+
+  test('does not evalute string type as number', () => {
+    const testRow = {
+      index: 0,
+      [LEFT_SIDE]: { type: FIELD_TYPE, value: 'age' },
+      [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+      [RIGHT_SIDE]: { type: STRING_TYPE, value: '42' }
+    }
+
+    const value = evaluateBlock(testRow[RIGHT_SIDE], testObject)
+    expect(value).toEqual('42')
+    expect(typeof value).toEqual('string')
+  })
 })
 
 describe('validateConfig', () => {

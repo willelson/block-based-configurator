@@ -7,6 +7,8 @@ import {
   NOT_EQUAL_TO
 } from '@/scripts/constants.js'
 
+import { STRING_TYPE, NUMBER_TYPE } from '@/scripts/constants.js'
+
 import { LEFT_SIDE, OPERATOR, RIGHT_SIDE } from '@/scripts/constants.js'
 
 /**
@@ -36,7 +38,11 @@ export const evaluateBlock = (block, testObject) => {
     return testObject[value]
   } else if (block.position === 'operator') {
     return type
-  } else return value
+  } else if (type === STRING_TYPE) {
+    return String(value)
+  } else if (type === NUMBER_TYPE) {
+    return Number(value)
+  }
 }
 
 /**
