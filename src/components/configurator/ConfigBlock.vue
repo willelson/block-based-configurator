@@ -44,6 +44,18 @@ export default {
     DraggableBlock
   },
   methods: {
+    /**
+     * Sets the transfer data for dragging a config block
+     * @param {object} event - event object from dragged object
+     *
+     * data structure
+     * {
+     *   type: '' // type of the block - 'field' or 'numer'
+     *   value: ''
+     *   configIndex: 0 // index of blocks row in the config array
+     *   position: '' // position of the block in the row - left side or right side
+     * }
+     */
     startDrag(event) {
       const { type, value, configIndex, position } = this
       event.dataTransfer.setData('data', JSON.stringify({ type, value, configIndex, position }))

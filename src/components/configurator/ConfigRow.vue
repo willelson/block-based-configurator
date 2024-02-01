@@ -25,7 +25,7 @@
     >
       <OperatorBlock
         v-if="operatorOccupied"
-        :type="config.operator.type"
+        :value="config.operator.value"
         :label="config.operator.label"
         :configIndex="config.index"
       />
@@ -77,7 +77,6 @@ export default {
      * @returns {undefined}
      *
      * @emits 'update:config' - checks drop is valid with vaidateDrop then sends updated row config to parent confi area
-     * @emits 'block-moved' - emitted if dropped block was moved from another position in so it can be deleted from previous positionn
      *
      */
     onDrop(event, dropZone) {
@@ -85,23 +84,17 @@ export default {
       if (!data) return
 
       const block = JSON.parse(data)
-      if (!this.validateDrop(dropZone, block.position)) return
+      console.log(block)
+      if (!this.validateDrop(dropZone, block.type)) return
 
       const updatedRow = { ...this.config, [dropZone]: block }
       this.$emit('update:config', updatedRow)
-
-      const blockHadAlreadyBeenPlaced = block.hasOwnProperty('configIndex')
-      const droppedOnStartingPosition =
-        block.position === dropZone && block.configIndex === this.config.index
-
-      if (blockHadAlreadyBeenPlaced && !droppedOnStartingPosition) {
-        this.$emit('block-moved', { fromPosition: block.position, fromIndex: block.configIndex })
-      }
+      this.checkPreviousBlockPosition(dropZone, block)
     },
     /**
      * Checks if dragged block is allowed to be dropped on the drop zone targeted
      * @param {string} dropZone - row component that draged item was dropped onto - 'block1', 'operator' or 'block2'
-     * @param {string} blockType - type of the dragged lock - 'block1', 'operator' or 'block2'
+     * @param {string} blockType - type of the dragged block - 'block1', 'operator' or 'block2'
      * @returns {boolean} - whether or not this drop is allowed
      *
      * @example
@@ -120,6 +113,24 @@ export default {
       if (nonOperatorDroppedInCircle) dropValidity = false
 
       return dropValidity
+    },
+    /**
+     * Handles the case when a block was moved from another position in the config array
+     * @param {string} dropZone - row component that draged item was dropped onto - 'block1', 'operator' or 'block2'
+     * @param {object} block - oject representing a component of an expression in the config array
+     *
+     * @emits 'block-moved' - emitted so the block can be removed from it's previous position in the config array
+     */
+    checkPreviousBlockPosition(dropZone, block) {
+      const blockHasAlreadyBeenPlaced = block.hasOwnProperty('configIndex')
+      if (!blockHasAlreadyBeenPlaced) return
+
+      const droppedOnStartingPosition =
+        block.type === dropZone && block.configIndex === this.config.index
+
+      if (blockHasAlreadyBeenPlaced && !droppedOnStartingPosition) {
+        this.$emit('block-moved', { fromPosition: block.position, fromIndex: block.configIndex })
+      }
     },
     updateValue(value, dropZone) {
       const updatedDropZone = { ...this.config[dropZone], value }

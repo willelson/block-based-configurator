@@ -3,12 +3,12 @@
     <div class="operator-section">
       <div class="section-title">Operators</div>
       <div class="block-container small-gap">
-        <OperatorBlock :type="LESS_THAN" label="less than" />
-        <OperatorBlock :type="EQUAL_TO" label="equal to" />
-        <OperatorBlock :type="GREATER_THAN" label="greater than" />
-        <OperatorBlock :type="GREATER_THAN_OR_EQUAL_TO" label="greater than or equal to" />
-        <OperatorBlock :type="LESS_THAN_OR_EQUAL_TO" label="less than or equal to" />
-        <OperatorBlock :type="NOT_EQUAL_TO" label="not equal to" />
+        <OperatorBlock :value="LESS_THAN" label="less than" />
+        <OperatorBlock :value="EQUAL_TO" label="equal to" />
+        <OperatorBlock :value="GREATER_THAN" label="greater than" />
+        <OperatorBlock :value="GREATER_THAN_OR_EQUAL_TO" label="greater than or equal to" />
+        <OperatorBlock :value="LESS_THAN_OR_EQUAL_TO" label="less than or equal to" />
+        <OperatorBlock :value="NOT_EQUAL_TO" label="not equal to" />
       </div>
     </div>
     <div class="operator-section">

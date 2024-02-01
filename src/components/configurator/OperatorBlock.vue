@@ -10,10 +10,11 @@
 
 <script>
 import DraggableBlock from '@/components/configurator/DraggableBlock.vue'
+import { OPERATOR } from '@/scripts/constants.js'
 
 export default {
   props: {
-    type: {
+    value: {
       type: String,
       required: true
     },
@@ -27,17 +28,33 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      type: OPERATOR,
+      position: OPERATOR
+    }
   },
   components: {
     DraggableBlock
   },
   methods: {
+    /**
+     * Sets the transfer data for dragging a config block
+     * @param {object} event - event object from dragged object
+     *
+     * data structure
+     * {
+     *   type: '' // type of the block - 'field' or 'numer'
+     *   value: '' // operator to be applied to the expression
+     *   label: '' // user friendly representation of the value
+     *   configIndex: 0 // index of blocks row in the config array
+     *   position: '' // position of the block in the row - left side or right side
+     * }
+     */
     startDrag(event) {
-      const { type, label, configIndex } = this
+      const { type, value, label, configIndex, position } = this
       event.dataTransfer.setData(
         'data',
-        JSON.stringify({ type, label, configIndex, position: 'operator' })
+        JSON.stringify({ type, value, label, configIndex, position })
       )
     }
   }
