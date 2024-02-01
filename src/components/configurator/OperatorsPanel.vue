@@ -3,12 +3,12 @@
     <div class="operator-section">
       <div class="section-title">Operators</div>
       <div class="block-container small-gap">
-        <OperatorBlock :type="LESS_THAN" label="less than" />
-        <OperatorBlock :type="EQUAL_TO" label="equal to" />
-        <OperatorBlock :type="GREATER_THAN" label="greater than" />
-        <OperatorBlock :type="GREATER_THAN_OR_EQUAL_TO" label="greater than or equal to" />
-        <OperatorBlock :type="LESS_THAN_OR_EQUAL_TO" label="less than or equal to" />
-        <OperatorBlock :type="NOT_EQUAL_TO" label="not equal to" />
+        <OperatorBlock :value="LESS_THAN" label="less than" />
+        <OperatorBlock :value="EQUAL_TO" label="equal to" />
+        <OperatorBlock :value="GREATER_THAN" label="greater than" />
+        <OperatorBlock :value="GREATER_THAN_OR_EQUAL_TO" label="greater than or equal to" />
+        <OperatorBlock :value="LESS_THAN_OR_EQUAL_TO" label="less than or equal to" />
+        <OperatorBlock :value="NOT_EQUAL_TO" label="not equal to" />
       </div>
     </div>
     <div class="operator-section">
@@ -20,8 +20,8 @@
     <div class="operator-section">
       <div class="section-title">Value types</div>
       <div class="block-container small-gap">
-        <VariableBlock type="text" />
-        <VariableBlock type="number" />
+        <VariableBlock :type="STRING_TYPE" />
+        <VariableBlock :type="NUMBER_TYPE" />
       </div>
     </div>
   </div>
@@ -40,6 +40,8 @@ import {
   NOT_EQUAL_TO
 } from '@/scripts/constants.js'
 
+import { STRING_TYPE, NUMBER_TYPE } from '@/scripts/constants.js'
+
 export default {
   data() {
     return {
@@ -48,7 +50,9 @@ export default {
       GREATER_THAN_OR_EQUAL_TO,
       LESS_THAN_OR_EQUAL_TO,
       EQUAL_TO,
-      NOT_EQUAL_TO
+      NOT_EQUAL_TO,
+      STRING_TYPE,
+      NUMBER_TYPE
     }
   },
   components: {

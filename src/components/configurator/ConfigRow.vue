@@ -1,57 +1,59 @@
 <template>
   <div class="config-row large-gap">
-    <div
+    <DroppableArea
       class="square"
-      :class="firstBlockOccupied ? '' : 'dashed-border'"
-      @drop="onDrop($event, 'block1')"
-      @dragenter.prevent
-      @dragover.prevent
+      :class="leftSideOccupied ? '' : 'dashed-border'"
+      @drop="onDrop($event, LEFT_SIDE)"
     >
-      <ConfigBlock
-        v-if="firstBlockOccupied"
-        :type="config.block1.type"
-        :value="config.block1.value"
-        :configIndex="config.index"
-        position="block1"
-        @update:value="(value) => updateValue(value, 'block1')"
-      />
-    </div>
-    <div
+      <template #content>
+        <ConfigBlock
+          v-if="leftSideOccupied"
+          :type="config[LEFT_SIDE].type"
+          :value="config[LEFT_SIDE].value"
+          :configIndex="config.index"
+          :position="LEFT_SIDE"
+          @update:value="(value) => updateValue(value, LEFT_SIDE)"
+      /></template>
+    </DroppableArea>
+    <DroppableArea
       class="circle"
       :class="operatorOccupied ? '' : 'dashed-border'"
-      @drop="onDrop($event, 'operator')"
-      @dragenter.prevent
-      @dragover.prevent
+      @drop="onDrop($event, OPERATOR)"
     >
-      <OperatorBlock
-        v-if="operatorOccupied"
-        :type="config.operator.type"
-        :label="config.operator.label"
-        :configIndex="config.index"
-      />
-    </div>
-    <div
+      <template #content>
+        <OperatorBlock
+          v-if="operatorOccupied"
+          :value="config[OPERATOR].value"
+          :label="config[OPERATOR].label"
+          :configIndex="config.index"
+        />
+      </template>
+    </DroppableArea>
+    <DroppableArea
       class="square"
-      :class="secondBlockOccupied ? '' : 'dashed-border'"
-      @drop="onDrop($event, 'block2')"
-      @dragenter.prevent
-      @dragover.prevent
+      :class="rightSideOccupied ? '' : 'dashed-border'"
+      @drop="onDrop($event, RIGHT_SIDE)"
     >
-      <ConfigBlock
-        v-if="secondBlockOccupied"
-        :type="config.block2.type"
-        :value="config.block2.value"
-        :config-index="config.index"
-        position="block2"
-        @update:value="(value) => updateValue(value, 'block2')"
-      />
-    </div>
+      <template #content>
+        <ConfigBlock
+          v-if="rightSideOccupied"
+          :type="config[RIGHT_SIDE].type"
+          :value="config[RIGHT_SIDE].value"
+          :config-index="config.index"
+          :position="RIGHT_SIDE"
+          @update:value="(value) => updateValue(value, RIGHT_SIDE)"
+        />
+      </template>
+    </DroppableArea>
   </div>
 </template>
 
 <script>
 import ConfigBlock from '@/components/configurator/ConfigBlock.vue'
 import OperatorBlock from '@/components/configurator/OperatorBlock.vue'
+import DroppableArea from '@/components/configurator/DroppableArea.vue'
+
+import { LEFT_SIDE, OPERATOR, RIGHT_SIDE } from '@/scripts/constants'
 
 export default {
   emits: ['update:config', 'block-moved'],
@@ -63,11 +65,16 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      LEFT_SIDE,
+      OPERATOR,
+      RIGHT_SIDE
+    }
   },
   components: {
     ConfigBlock,
-    OperatorBlock
+    OperatorBlock,
+    DroppableArea
   },
   methods: {
     /**
@@ -77,7 +84,6 @@ export default {
      * @returns {undefined}
      *
      * @emits 'update:config' - checks drop is valid with vaidateDrop then sends updated row config to parent confi area
-     * @emits 'block-moved' - emitted if dropped block was moved from another position in so it can be deleted from previous positionn
      *
      */
     onDrop(event, dropZone) {
@@ -85,23 +91,16 @@ export default {
       if (!data) return
 
       const block = JSON.parse(data)
-      if (!this.validateDrop(dropZone, block.position)) return
+      if (!this.validateDrop(dropZone, block.type)) return
 
       const updatedRow = { ...this.config, [dropZone]: block }
       this.$emit('update:config', updatedRow)
-
-      const blockHadAlreadyBeenPlaced = block.hasOwnProperty('configIndex')
-      const droppedOnStartingPosition =
-        block.position === dropZone && block.configIndex === this.config.index
-
-      if (blockHadAlreadyBeenPlaced && !droppedOnStartingPosition) {
-        this.$emit('block-moved', { fromPosition: block.position, fromIndex: block.configIndex })
-      }
+      this.checkPreviousBlockPosition(dropZone, block)
     },
     /**
      * Checks if dragged block is allowed to be dropped on the drop zone targeted
      * @param {string} dropZone - row component that draged item was dropped onto - 'block1', 'operator' or 'block2'
-     * @param {string} blockType - type of the dragged lock - 'block1', 'operator' or 'block2'
+     * @param {string} blockType - type of the dragged block - 'block1', 'operator' or 'block2'
      * @returns {boolean} - whether or not this drop is allowed
      *
      * @example
@@ -121,6 +120,24 @@ export default {
 
       return dropValidity
     },
+    /**
+     * Handles the case when a block was moved from another position in the config array
+     * @param {string} dropZone - row component that draged item was dropped onto - 'block1', 'operator' or 'block2'
+     * @param {object} block - oject representing a component of an expression in the config array
+     *
+     * @emits 'block-moved' - emitted so the block can be removed from it's previous position in the config array
+     */
+    checkPreviousBlockPosition(dropZone, block) {
+      const blockHasAlreadyBeenPlaced = block.hasOwnProperty('configIndex')
+      if (!blockHasAlreadyBeenPlaced) return
+
+      const droppedOnStartingPosition =
+        block.position === dropZone && block.configIndex === this.config.index
+
+      if (blockHasAlreadyBeenPlaced && !droppedOnStartingPosition) {
+        this.$emit('block-moved', { fromPosition: block.position, fromIndex: block.configIndex })
+      }
+    },
     updateValue(value, dropZone) {
       const updatedDropZone = { ...this.config[dropZone], value }
       const updatedRow = { ...this.config, [dropZone]: updatedDropZone }
@@ -128,14 +145,14 @@ export default {
     }
   },
   computed: {
-    firstBlockOccupied() {
-      return Object.keys(this.config.block1).length > 0
+    leftSideOccupied() {
+      return Object.keys(this.config[LEFT_SIDE]).length > 0
     },
     operatorOccupied() {
-      return Object.keys(this.config.operator).length > 0
+      return Object.keys(this.config[OPERATOR]).length > 0
     },
-    secondBlockOccupied() {
-      return Object.keys(this.config.block2).length > 0
+    rightSideOccupied() {
+      return Object.keys(this.config[RIGHT_SIDE]).length > 0
     }
   }
 }
