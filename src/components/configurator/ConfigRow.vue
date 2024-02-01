@@ -3,28 +3,28 @@
     <DroppableArea
       class="square"
       :class="leftSideOccupied ? '' : 'dashed-border'"
-      @drop="onDrop($event, leftSide)"
+      @drop="onDrop($event, LEFT_SIDE)"
     >
       <template #content>
         <ConfigBlock
           v-if="leftSideOccupied"
-          :type="config[leftSide].type"
-          :value="config[leftSide].value"
+          :type="config[LEFT_SIDE].type"
+          :value="config[LEFT_SIDE].value"
           :configIndex="config.index"
-          :position="leftSide"
-          @update:value="(value) => updateValue(value, leftSide)"
+          :position="LEFT_SIDE"
+          @update:value="(value) => updateValue(value, LEFT_SIDE)"
       /></template>
     </DroppableArea>
     <DroppableArea
       class="circle"
       :class="operatorOccupied ? '' : 'dashed-border'"
-      @drop="onDrop($event, operator)"
+      @drop="onDrop($event, OPERATOR)"
     >
       <template #content>
         <OperatorBlock
           v-if="operatorOccupied"
-          :value="config[operator].value"
-          :label="config[operator].label"
+          :value="config[OPERATOR].value"
+          :label="config[OPERATOR].label"
           :configIndex="config.index"
         />
       </template>
@@ -32,16 +32,16 @@
     <DroppableArea
       class="square"
       :class="rightSideOccupied ? '' : 'dashed-border'"
-      @drop="onDrop($event, rightSide)"
+      @drop="onDrop($event, RIGHT_SIDE)"
     >
       <template #content>
         <ConfigBlock
           v-if="rightSideOccupied"
-          :type="config[rightSide].type"
-          :value="config[rightSide].value"
+          :type="config[RIGHT_SIDE].type"
+          :value="config[RIGHT_SIDE].value"
           :config-index="config.index"
-          :position="rightSide"
-          @update:value="(value) => updateValue(value, rightSide)"
+          :position="RIGHT_SIDE"
+          @update:value="(value) => updateValue(value, RIGHT_SIDE)"
         />
       </template>
     </DroppableArea>
@@ -65,7 +65,11 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      LEFT_SIDE,
+      OPERATOR,
+      RIGHT_SIDE
+    }
   },
   components: {
     ConfigBlock,
@@ -142,22 +146,13 @@ export default {
   },
   computed: {
     leftSideOccupied() {
-      return Object.keys(this.config.block1).length > 0
+      return Object.keys(this.config[LEFT_SIDE]).length > 0
     },
     operatorOccupied() {
-      return Object.keys(this.config.operator).length > 0
+      return Object.keys(this.config[OPERATOR]).length > 0
     },
     rightSideOccupied() {
-      return Object.keys(this.config.block2).length > 0
-    },
-    rightSide() {
-      return RIGHT_SIDE
-    },
-    operator() {
-      return OPERATOR
-    },
-    leftSide() {
-      return LEFT_SIDE
+      return Object.keys(this.config[RIGHT_SIDE]).length > 0
     }
   }
 }

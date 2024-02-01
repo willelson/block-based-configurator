@@ -7,6 +7,10 @@ import {
   NOT_EQUAL_TO
 } from '@/scripts/constants.js'
 
+import { STRING_TYPE, NUMBER_TYPE, FIELD_TYPE } from '@/scripts/constants.js'
+
+import { LEFT_SIDE, OPERATOR, RIGHT_SIDE } from '@/scripts/constants.js'
+
 import {
   validateRow,
   evaluateBlock,
@@ -29,9 +33,9 @@ describe('validateRow', () => {
 describe('evaluateBlock', () => {
   const testRow = {
     index: 0,
-    block1: { type: 'field', value: 'name' },
-    operator: { type: EQUAL_TO, position: 'operator' },
-    block2: { type: 'string', value: 'Buddha' }
+    [LEFT_SIDE]: { type: FIELD_TYPE, value: 'name' },
+    [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+    [RIGHT_SIDE]: { type: STRING_TYPE, value: 'Buddha' }
   }
 
   const testObject = {
@@ -39,15 +43,15 @@ describe('evaluateBlock', () => {
   }
 
   test('evalutes field value from testObject', () => {
-    const value = evaluateBlock(testRow.block1, testObject)
+    const value = evaluateBlock(testRow[LEFT_SIDE], testObject)
     expect(value).toEqual('testName')
   })
   test('evalutes string value from testRow', () => {
-    const value = evaluateBlock(testRow.block2, testObject)
+    const value = evaluateBlock(testRow[RIGHT_SIDE], testObject)
     expect(value).toEqual('Buddha')
   })
   test('evalutes operator value from testRow', () => {
-    const value = evaluateBlock(testRow.operator, testObject)
+    const value = evaluateBlock(testRow[OPERATOR], testObject)
     expect(value).toEqual(EQUAL_TO)
   })
 })
@@ -57,15 +61,15 @@ describe('validateConfig', () => {
     const config = [
       {
         index: 0,
-        block1: { type: 'field', value: 'name' },
-        operator: { type: EQUAL_TO, position: 'operator' },
-        block2: { type: 'text', value: 'buddha' }
+        [LEFT_SIDE]: { type: FIELD_TYPE, value: 'name' },
+        [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+        [RIGHT_SIDE]: { type: STRING_TYPE, value: 'buddha' }
       },
       {
         index: 1,
-        block1: { type: 'text', value: 'employee' },
-        operator: { type: EQUAL_TO, position: 'operator' },
-        block2: { type: 'field', value: 'status' }
+        [LEFT_SIDE]: { type: STRING_TYPE, value: 'employee' },
+        [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+        [RIGHT_SIDE]: { type: FIELD_TYPE, value: 'status' }
       }
     ]
 
@@ -81,15 +85,15 @@ describe('validateConfig', () => {
     const config = [
       {
         index: 0,
-        block1: { type: 'field', value: 'name' },
-        operator: { type: EQUAL_TO, position: 'operator' },
-        block2: { type: 'text', value: 'buddha' }
+        [LEFT_SIDE]: { type: FIELD_TYPE, value: 'name' },
+        [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+        [RIGHT_SIDE]: { type: STRING_TYPE, value: 'buddha' }
       },
       {
         index: 1,
-        block1: { type: 'text', value: 'employee' },
-        operator: { type: EQUAL_TO, position: 'operator' },
-        block2: { type: 'field', value: 'status' }
+        [LEFT_SIDE]: { type: STRING_TYPE, value: 'employee' },
+        [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+        [RIGHT_SIDE]: { type: FIELD_TYPE, value: 'status' }
       }
     ]
 
@@ -107,13 +111,13 @@ describe('removeEmptyRows', () => {
     const config = [
       {
         index: 0,
-        block1: { type: 'field', value: 'name' },
-        operator: { type: 'equal_to', label: 'equal to', position: 'operator' },
-        block2: { type: 'text', value: 'buddha' }
+        [LEFT_SIDE]: { type: FIELD_TYPE, value: 'name' },
+        [OPERATOR]: { type: 'equal_to', label: 'equal to', position: OPERATOR },
+        [RIGHT_SIDE]: { type: STRING_TYPE, value: 'buddha' }
       },
-      { index: 1, block1: {}, operator: {}, block2: {} },
-      { index: 2, block1: {}, operator: {}, block2: {} },
-      { index: 3, block1: {}, operator: {}, block2: {} }
+      { index: 1, [LEFT_SIDE]: {}, operator: {}, [RIGHT_SIDE]: {} },
+      { index: 2, [LEFT_SIDE]: {}, operator: {}, [RIGHT_SIDE]: {} },
+      { index: 3, [LEFT_SIDE]: {}, operator: {}, [RIGHT_SIDE]: {} }
     ]
 
     const result = removeEmptyRows(config)
@@ -123,17 +127,21 @@ describe('removeEmptyRows', () => {
     const config = [
       {
         index: 0,
-        block1: { type: 'field', value: 'name' },
-        operator: { type: 'equal_to', label: 'equal to', position: 'operator' },
-        block2: { type: 'text', value: 'buddha' }
+        [LEFT_SIDE]: { type: FIELD_TYPE, value: 'name' },
+        [OPERATOR]: { type: 'equal_to', label: 'equal to', position: OPERATOR },
+        [RIGHT_SIDE]: { type: STRING_TYPE, value: 'buddha' }
       },
-      { index: 1, block1: {}, operator: {}, block2: {} },
-      { index: 2, block1: {}, operator: {}, block2: { type: 'text', value: 'second buddha' } },
-      { index: 3, block1: {}, operator: {}, block2: {} }
+      { index: 1, [LEFT_SIDE]: {}, operator: {}, [RIGHT_SIDE]: {} },
+      {
+        index: 2,
+        [LEFT_SIDE]: {},
+        [OPERATOR]: {},
+        [RIGHT_SIDE]: { type: STRING_TYPE, value: 'second buddha' }
+      },
+      { index: 3, [LEFT_SIDE]: {}, [OPERATOR]: {}, [RIGHT_SIDE]: {} }
     ]
 
     const result = removeEmptyRows(config)
-    console.log(result)
     expect(result.length).toBe(2)
   })
 })

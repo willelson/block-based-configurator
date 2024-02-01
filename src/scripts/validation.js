@@ -7,6 +7,8 @@ import {
   NOT_EQUAL_TO
 } from '@/scripts/constants.js'
 
+import { LEFT_SIDE, OPERATOR, RIGHT_SIDE } from '@/scripts/constants.js'
+
 /**
  * Takes a block from an expression in the config array and returns a value based on it's type
  * @param {object} block - a block from an expression
@@ -94,9 +96,9 @@ export const validateConfig = (config, testOject) => {
 
   const testConfig = removeEmptyRows(config)
   testConfig.forEach((row) => {
-    const block1Value = evaluateBlock(row.block1, testOject)
-    const operator = evaluateBlock(row.operator, testOject)
-    const block2Value = evaluateBlock(row.block2, testOject)
+    const block1Value = evaluateBlock(row[LEFT_SIDE], testOject)
+    const operator = evaluateBlock(row[OPERATOR], testOject)
+    const block2Value = evaluateBlock(row[RIGHT_SIDE], testOject)
 
     if (!validateRow(block1Value, operator, block2Value)) valid = false
   })
@@ -127,7 +129,7 @@ export const validateConfig = (config, testOject) => {
  * result >>> true
  */
 const allBlocksEmpty = (row) => {
-  const keys = ['block1', 'operator', 'block2']
+  const keys = [LEFT_SIDE, OPERATOR, RIGHT_SIDE]
   return keys.every((key) => Object.keys(row[key]).length === 0)
 }
 
