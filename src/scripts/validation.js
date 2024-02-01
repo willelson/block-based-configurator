@@ -36,8 +36,8 @@ export const evaluateBlock = (block, testObject) => {
 
   if (type === 'field') {
     return testObject[value]
-  } else if (block.position === 'operator') {
-    return type
+  } else if (type === OPERATOR) {
+    return value
   } else if (type === STRING_TYPE) {
     return String(value)
   } else if (type === NUMBER_TYPE) {

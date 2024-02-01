@@ -34,7 +34,7 @@ describe('evaluateBlock', () => {
   const testRow = {
     index: 0,
     [LEFT_SIDE]: { type: FIELD_TYPE, value: 'name' },
-    [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+    [OPERATOR]: { type: OPERATOR, value: EQUAL_TO },
     [RIGHT_SIDE]: { type: STRING_TYPE, value: 'Buddha' }
   }
 
@@ -58,7 +58,7 @@ describe('evaluateBlock', () => {
     const testRow = {
       index: 0,
       [LEFT_SIDE]: { type: FIELD_TYPE, value: 'age' },
-      [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+      [OPERATOR]: { type: OPERATOR, value: EQUAL_TO },
       [RIGHT_SIDE]: { type: NUMBER_TYPE, value: '42' }
     }
 
@@ -71,7 +71,7 @@ describe('evaluateBlock', () => {
     const testRow = {
       index: 0,
       [LEFT_SIDE]: { type: FIELD_TYPE, value: 'age' },
-      [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+      [OPERATOR]: { type: OPERATOR, value: EQUAL_TO },
       [RIGHT_SIDE]: { type: STRING_TYPE, value: '42' }
     }
 
@@ -87,13 +87,13 @@ describe('validateConfig', () => {
       {
         index: 0,
         [LEFT_SIDE]: { type: FIELD_TYPE, value: 'name' },
-        [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+        [OPERATOR]: { type: OPERATOR, value: EQUAL_TO },
         [RIGHT_SIDE]: { type: STRING_TYPE, value: 'buddha' }
       },
       {
         index: 1,
         [LEFT_SIDE]: { type: STRING_TYPE, value: 'employee' },
-        [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+        [OPERATOR]: { type: OPERATOR, value: EQUAL_TO },
         [RIGHT_SIDE]: { type: FIELD_TYPE, value: 'status' }
       }
     ]
@@ -111,13 +111,13 @@ describe('validateConfig', () => {
       {
         index: 0,
         [LEFT_SIDE]: { type: FIELD_TYPE, value: 'name' },
-        [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+        [OPERATOR]: { type: OPERATOR, value: EQUAL_TO },
         [RIGHT_SIDE]: { type: STRING_TYPE, value: 'buddha' }
       },
       {
         index: 1,
         [LEFT_SIDE]: { type: STRING_TYPE, value: 'employee' },
-        [OPERATOR]: { type: EQUAL_TO, position: OPERATOR },
+        [OPERATOR]: { type: OPERATOR, value: EQUAL_TO },
         [RIGHT_SIDE]: { type: FIELD_TYPE, value: 'status' }
       }
     ]
