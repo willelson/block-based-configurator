@@ -29,7 +29,7 @@ const FAILED = 'failed'
 export default {
   data() {
     return {
-      value: '{}',
+      value: {},
       state: PENDING
     }
   },

@@ -18,7 +18,7 @@ export default {
         return
       }
       const data = await file.text()
-      this.$emit('upload', { config: JSON.parse(data), filename: file.name})
+      this.$emit('upload', { config: JSON.parse(data), filename: file.name })
     }
   }
 }
